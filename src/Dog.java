@@ -35,7 +35,7 @@ public class Dog {
         this.hearingImpaired = hearingImpaired;
 
         // Hunden checkas in automatiskt
-        this.checkedIn = true;
+        this.checkedIn = false;
     }
 
     // Hämtar hundens namn

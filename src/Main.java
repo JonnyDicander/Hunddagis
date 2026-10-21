@@ -184,8 +184,6 @@ public class Main {
                     System.out.println("Hundens uppgifter har uppdaterats!");
                 }
 
-
-
             // 5. Ta bort hund
         } else if (choice == 5) {
 
@@ -213,7 +211,24 @@ public class Main {
                 // 6. Checka in hund
             } else if (choice == 6) {
 
-                System.out.println("Checka in hund");
+                System.out.println("\n--- CHECKA IN HUND ---");
+
+                System.out.print("Ange hundens chipnummer: ");
+                String chipNumber = scanner.nextLine();
+
+                Dog dog = register.findDog(chipNumber);
+
+                if (dog == null) {
+                    System.out.println("Hunden hittades inte!");
+
+                } else if (dog.isCheckedIn()) {
+                    System.out.println("Hunden är redan incheckad!");
+
+                } else {
+                    dog.setCheckedIn(true);
+                    System.out.println("Hunden " + dog.getName()
+                            + " har checkats in!");
+                }
 
                 // 7. Checka ut hund
             } else if (choice == 7) {
