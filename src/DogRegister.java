@@ -74,7 +74,7 @@ public class DogRegister {
             dogs.remove(dog);
 
             System.out.println("Hunden " + dog.getName() +
-                    " har tagits bort!");
+                    " har tagits bort från registret!");
 
             return true;
         }

@@ -189,7 +189,26 @@ public class Main {
             // 5. Ta bort hund
         } else if (choice == 5) {
 
-                System.out.println("Ta bort hund");
+                System.out.print("Ange hundens chipnummer: ");
+                String chipNumber = scanner.nextLine();
+
+                Dog dog = register.findDog(chipNumber);
+
+                if (dog == null) {
+                    System.out.println("Hunden hittades inte.");
+                } else {
+                    System.out.println("Du har valt att ta bort:");
+                    dog.showInfo();
+
+                    System.out.print("Är du säker? (J/N): ");
+                    String confirm = scanner.nextLine();
+
+                    if (confirm.equalsIgnoreCase("J")) {
+                        register.removeDog(chipNumber);
+                    } else {
+                        System.out.println("Borttagningen avbröts.");
+                    }
+                }
 
                 // 6. Checka in hund
             } else if (choice == 6) {
