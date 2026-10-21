@@ -11,7 +11,7 @@ public class DogRegister {
 
         // Kontrollera om chipnumret redan finns
         if (findDog(dog.getChipNumber()) != null) {
-            System.out.println("Chipnumret finns redan i registret!");
+            System.out.println("Chipnumret finns redan i hunddagisets register!");
             return false;
         }
 
@@ -26,7 +26,7 @@ public class DogRegister {
     public void showAllDogs() {
 
         if (dogs.isEmpty()) {
-            System.out.println("Inga hundar registrerade!");
+            System.out.println("Inga hundar är registrerade!");
         } else {
 
             System.out.println("\n--- REGISTRERADE HUNDAR ---");
@@ -50,7 +50,7 @@ public class DogRegister {
         return null;
     }
 
-    // Sök efter hund med namn eller chipnummer
+    // Sök efter hund med namn eller angivet chipnummer
     public Dog searchDog(String search) {
 
         for (Dog dog : dogs) {
@@ -79,7 +79,7 @@ public class DogRegister {
             return true;
         }
 
-        System.out.println("Ingen hund med detta chipnummer hittades!");
+        System.out.println("Ingen hund med detta chipnummer hittades i hunddagisets register!");
         return false;
     }
 }

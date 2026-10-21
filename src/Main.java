@@ -5,17 +5,20 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Scanner används för att läsa det som användaren skriver.
+        // Scanner används för att läsa det som användaren skriver in.
         Scanner scanner = new Scanner(System.in);
 
         // Skapar hundregistret som hanterar hundarna.
         DogRegister register = new DogRegister();
 
+        // Ett vänligt välkomstmeddelande som visas ovanför menynvalen när programmet körs.
+        System.out.println("\nVälkommen till hunddagiset!");
+
         // Startvärdet är -1 eftersom användaren ännu inte valt något.
         int choice = -1;
 
-        // Huvudloopen fortsätter så länge användaren inte väljer 0.
-        while (choice != 0) {
+        // Huvudloopen fortsätter så länge användaren inte väljer 8.
+        while (choice != 8) {
 
             // Skriver ut huvudmenyn.
             System.out.println("\n===== HUNDDAGIS =====");
@@ -26,11 +29,11 @@ public class Main {
             System.out.println("5. Ta bort hund");
             System.out.println("6. Checka in hund");
             System.out.println("7. Checka ut hund");
-            System.out.println("0. Avsluta");
+            System.out.println("8. Avsluta");
             System.out.println("=====================");
 
-            // Läser in ett giltigt menyval mellan 0 och 7.
-            // Om användaren skriver fel frågar metoden igen.
+            // Läser in ett giltigt menyval mellan 1 och 8.
+            // Om användaren skriver fel frågar metoden igen, tills påståendet blir sant.
             choice = readMenuChoice(scanner);
 
             // 1. Registrera hund
@@ -71,8 +74,7 @@ public class Main {
                 Dog dog = new Dog(
                         name, breed, chipNumber, gender, age,
                         canSitWithOthers, neutered, needsGrooming,
-                        coatType, visionImpaired, hearingImpaired
-                );
+                        coatType, visionImpaired, hearingImpaired );
 
                 // Lägger till hunden i registret.
                 register.addDog(dog);
@@ -150,14 +152,13 @@ public class Main {
                     dog.updateInfo(
                             name, breed, gender, age,
                             canSitWithOthers, neutered, needsGrooming,
-                            coatType, visionImpaired, hearingImpaired
-                    );
+                            coatType, visionImpaired, hearingImpaired );
 
                     System.out.println(
                             "Hundens uppgifter har uppdaterats!");
                 }
 
-                // 5. Ta bort hund
+                // 5. Ta bort hunden ur registret
             } else if (choice == 5) {
 
                 // Frågar efter chipnumret för hunden som ska tas bort.
@@ -190,7 +191,7 @@ public class Main {
                     }
                 }
 
-                // 6. Checka in hund
+                // 6. Checka in en hund
             } else if (choice == 6) {
 
                 System.out.println("\n--- CHECKA IN HUND ---");
@@ -218,7 +219,7 @@ public class Main {
                             + " har checkats in!");
                 }
 
-                // 7. Checka ut hund
+                // 7. Checka ut en hund
             } else if (choice == 7) {
 
                 System.out.println("\n--- CHECKA UT HUND ---");
@@ -246,11 +247,12 @@ public class Main {
                             + " har checkats ut!");
                 }
 
-                // 0. Avsluta
-            } else if (choice == 0) {
+                // 8. Avsluta programmet
+            } else if (choice == 8) {
 
                 // Avslutar huvudloopen.
-                System.out.println("Programmet avslutas!");
+                System.out.println("\nTack för att du besökte hunddagiset!");
+                System.out.println("Välkommen åter!");
             }
         }
 
@@ -258,15 +260,15 @@ public class Main {
         scanner.close();
     }
 
-
     /*
-     * HJÄLPMETOD 1: KONTROLL AV MENYVAL
+     * HJÄLPMETOD 1: Kontroll av menyval!
      *
      * Kontrollerar att användaren skriver ett heltal
-     * mellan 0 och 7.
+     * mellan 1 och 8.
      *
-     * Vid fel visas ett meddelande och frågan upprepas.
+     * Vid fel visas ett meddelande och frågan upprepas igen.
      */
+
     private static int readMenuChoice(Scanner scanner) {
 
         // while (true) upprepar frågan tills metoden returnerar ett värde.
@@ -278,40 +280,37 @@ public class Main {
             String input = scanner.nextLine().trim();
 
             try {
-
                 // Försöker omvandla texten till ett heltal.
                 int choice = Integer.parseInt(input);
 
-                // Godkänner endast menyval från 0 till 7.
-                if (choice >= 0 && choice <= 7) {
+                // Godkänner endast menyval från 1 till 8.
+                if (choice >= 1 && choice <= 8) {
 
                     // Skickar tillbaka det giltiga menyvalet.
                     return choice;
                 }
 
-                // Körs om talet exempelvis är 8 eller -1.
+                // Körs om talet exempelvis är 0 eller 9.
                 System.out.println(
-                        "Ogiltigt menyval! Välj ett tal mellan 0 och 7."
-                );
+                        "Det valet fungerar inte, Välj gärna ett tal mellan 1 och 8.");
 
             } catch (NumberFormatException e) {
 
-                // Körs om användaren exempelvis skriver hej eller 2.5.
+                // Körs om användaren exempelvis skulle råka skriva in hej eller 2.5 i menyvalet.
                 System.out.println(
-                        "Felaktig inmatning! Ange ett heltal mellan 0 och 7."
-                );
+                        "Hoppsan! Skriv gärna ett heltal mellan 1 och 8.");
             }
 
             // Vid fel börjar loopen om och frågar efter ett nytt val.
         }
     }
 
-
     /*
-     * HJÄLPMETOD 2: KONTROLL AV TEXT
+     * HJÄLPMETOD 2: Kontroll av text!
      *
      * Kontrollerar att användaren inte lämnar ett textfält tomt.
      */
+
     private static String readNonEmpty(
             Scanner scanner, String prompt) {
 
@@ -331,17 +330,16 @@ public class Main {
 
             // Körs om användaren bara trycker på Enter
             // eller skriver enbart mellanslag.
-            System.out.println("Fältet får inte vara tomt!");
+            System.out.println("Du glömde att fylla i fältet. Försök gärna igen!");
         }
     }
 
-
     /*
-     * HJÄLPMETOD 3: KONTROLL AV HELTAL
-     *
+     * HJÄLPMETOD 3: Kontroll av heltal!
      * Kontrollerar att användaren skriver ett heltal
      * som är minst lika stort som det angivna minimivärdet.
      */
+
     private static int readInt(
             Scanner scanner, String prompt, int min) {
 
@@ -353,7 +351,6 @@ public class Main {
             String input = scanner.nextLine().trim();
 
             try {
-
                 // Försöker omvandla texten till ett heltal.
                 int number = Integer.parseInt(input);
 
@@ -364,27 +361,24 @@ public class Main {
                 }
 
                 // Körs om talet är mindre än min.
-                System.out.println(
-                        "Talet måste vara minst " + min + "!"
-                );
+                System.out.println("Du behöver ange ett tal som är minst " + min + " Försök gärna igen!");
 
             } catch (NumberFormatException e) {
 
                 // Körs om inmatningen inte är ett giltigt heltal.
-                System.out.println("Ange ett giltigt heltal!");
+                System.out.println("Det verkar inte vara ett heltal. Försök gärna igen!");
             }
 
-            // Vid fel börjar loopen om och frågar igen.
+            // Vid fel börjar loopen om och frågar igen, tills påståendet blir sant.
         }
     }
 
-
     /*
-     * HJÄLPMETOD 4: KONTROLL AV JA ELLER NEJ
-     *
+     * HJÄLPMETOD 4: Kontroll av JA och NEJ påståenden!
      * Godkänner endast J eller N.
-     * Stora och små bokstäver fungerar.
+     * Tillåter att både Stora och små bokstäver fungerar.
      */
+
     private static boolean readYesNo(
             Scanner scanner, String prompt) {
 
@@ -410,7 +404,7 @@ public class Main {
             }
 
             // Alla andra svar ger ett felmeddelande.
-            System.out.println("Svara med J eller N!");
+            System.out.println("Skriv gärna J för ja eller N för nej.");
 
             // Loopen börjar om och samma fråga ställs igen.
         }

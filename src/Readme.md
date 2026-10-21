@@ -1,11 +1,11 @@
-// 1. [] Skapa Namn?, Ange Ras?, Ange Chipnummer?,Ange kön?, Ålder?, Möjlighet till samsittning med andra hundar?
-// Kastrerad? Pälsvård? Lång/Korhårig? syn/hörsel-nedsättning J/N?
+// 1. [] Skapa Namn?, Ange Ras?, Ange Chipnummer? Ange kön?, Ålder?, Möjlighet till samsittning med andra hundar?
+// Kastrerad? Pälsvård? Lång/Korthårig? Syn/hörsel-nedsättning J/N?
 
 
-// 2. [] Egenskaper? Blindhund? Narkotikasök? Lik hund? Sprängämnen? Personsök? Jägarhund?
-// Tillgänglig för hjälp till polis eller missing peapol? Godkänner ägare utlåning?
+// 2. [] Egenskaper? Blindhund? Narkotikasökande? Lik hund? Sprängämnen? Personsök? Jägarhund?
+// Tillgänglig för hjälp till polis eller missing people? Godkänner ägare utlåning? Tjänstehundar? 
 
-//3.  [] Sjukdom/Allergi? J/N?
+//3.  [] Sjukdom/Allergi? J/N? 
 
 
 1. Så fungerar programmet
@@ -27,18 +27,16 @@ Förklaring:
 
 2. Uppdatera Main.java
    Vi ska nu skapa vårt hundregister och lägga till registreringen under menyval 1.
-
+3. 
 Direkt efter:
-Scanner scanner = new Scanner(System.in);
+-Scanner scanner = new Scanner(System.in);
 
-
-lägger du till:
+Lägger du till:
 DogRegister register = new DogRegister();
 
 
 3. Lägger till ny metod:
   Vad gör den nya metoden?
-
 - dogs.isEmpty() kontrollerar om listan är tom.
 - for (Dog dog : dogs) går igenom alla registrerade hundar.
 - dog.showInfo() hämtar och skriver ut hundens uppgifter från Dog.java.
@@ -54,9 +52,7 @@ Därefter ändrade vi den raden till
 this.checkedIn = true;
 
 
-
 4. Lade till funktion för att söka efter specifik hund via namn eller chipnummer.
-
 Steg 1 – Vi uppdaterade "DogRegister.java"
 
 Från:
@@ -88,7 +84,6 @@ Till:
         dog.showInfo();
      else 
         System.out.println("Ingen hund hittades!");
-    
 
 Förklaring:
 - for går igenom alla hundar i registret.
@@ -103,5 +98,13 @@ Förklaring:
   Dog dog = searchDog();
   if (dog != null) 
   dog.showInfo();
-  
+
+
+Förbättrad felhantering i Main.java:
+- Jag har förbättrat felhanteringen i Main.java för att göra programmet enklare och tydligare att använda.
+- Kontroll av menyval: Användaren kan välja mellan alternativ 1–8. Om användaren skriver ett ogiltigt val får hen ett vänligt felmeddelande och får försöka igen.
+- Kontroll av inmatning: Programmet kontrollerar att användaren anger giltiga heltal, inte lämnar textfält tomma och svarar med J eller N på ja- och nej-frågor.
+- Upprepade frågor: Med hjälp av while-loopar upprepas frågorna tills användaren anger ett giltigt svar.
+- Välkomst- och avslutningsmeddelanden: Programmet visar ett välkomstmeddelande när det startar och ett tackmeddelande med ”Välkommen åter!” när användaren väljer att avsluta med alternativ 8.
+- Syftet med ändringarna är att göra programmet mer användarvänligt och minska risken för att felaktig inmatning stör programmets körning.
 
