@@ -1,9 +1,12 @@
-// 1.[] Skapa Namn?, Ange Ras?, Ange Chipnummer?,Ange kön?, Ålder?, Möjlighet till samsittning med andra hundar?
+// 1. [] Skapa Namn?, Ange Ras?, Ange Chipnummer?,Ange kön?, Ålder?, Möjlighet till samsittning med andra hundar?
 // Kastrerad? Pälsvård? Lång/Korhårig? syn/hörsel-nedsättning J/N?
 
 
 // 2. [] Egenskaper? Blindhund? Narkotikasök? Lik hund? Sprängämnen? Personsök? Jägarhund?
 // Tillgänglig för hjälp till polis eller missing peapol? Godkänner ägare utlåning?
+
+//3.  [] Sjukdom/Allergi? J/N?
+
 
 1. Så fungerar programmet
 - Scanner tar emot det användaren skriver.

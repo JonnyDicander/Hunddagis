@@ -130,11 +130,64 @@ public class Main {
 
                 // 4. Ändra hunduppgifter
             } else if (choice == 4) {
-
                 System.out.println("Ändra hunduppgifter");
 
-                // 5. Ta bort hund
-            } else if (choice == 5) {
+                System.out.print("Ange hundens chipnummer: ");
+
+                String chipNumber = scanner.nextLine();
+
+                Dog dog = register.findDog(chipNumber);
+
+                if (dog == null) {
+                    System.out.println("Hunden hittades inte.");
+                } else {
+                    System.out.print("Nytt namn: ");
+                    String name = scanner.nextLine();
+
+                    System.out.print("Ny ras: ");
+                    String breed = scanner.nextLine();
+
+                    System.out.print("Ny ålder: ");
+                    int age = Integer.parseInt(scanner.nextLine());
+
+                    System.out.print("Nytt kön: ");
+                    String gender = scanner.nextLine();
+
+                    System.out.print("Ny pälstyp: ");
+                    String coatType = scanner.nextLine();
+
+                    System.out.print("Kan vara med andra hundar? (J/N): ");
+                    boolean canSitWithOthers =
+                            scanner.nextLine().equalsIgnoreCase("J");
+
+                    System.out.print("Kastrerad? (J/N): ");
+                    boolean neutered =
+                            scanner.nextLine().equalsIgnoreCase("J");
+
+                    System.out.print("Behöver pälsvård? (J/N): ");
+                    boolean needsGrooming =
+                            scanner.nextLine().equalsIgnoreCase("J");
+
+                    System.out.print("Nedsatt syn? (J/N): ");
+                    boolean visionImpaired =
+                            scanner.nextLine().equalsIgnoreCase("J");
+
+                    System.out.print("Nedsatt hörsel? (J/N): ");
+                    boolean hearingImpaired =
+                            scanner.nextLine().equalsIgnoreCase("J");
+
+                    dog.updateInfo(
+                            name, breed, gender, age,
+                            canSitWithOthers, neutered, needsGrooming,
+                            coatType, visionImpaired, hearingImpaired
+                    );
+                    System.out.println("Hundens uppgifter har uppdaterats!");
+                }
+
+
+
+            // 5. Ta bort hund
+        } else if (choice == 5) {
 
                 System.out.println("Ta bort hund");
 
