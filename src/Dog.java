@@ -34,7 +34,7 @@ public class Dog {
         this.visionImpaired = visionImpaired;
         this.hearingImpaired = hearingImpaired;
 
-        // Hunden checkas in automatiskt
+        // Hunden checkas inte in automatiskt
         this.checkedIn = false;
     }
 

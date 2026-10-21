@@ -230,10 +230,31 @@ public class Main {
                             + " har checkats in!");
                 }
 
+
                 // 7. Checka ut hund
             } else if (choice == 7) {
 
-                System.out.println("Checka ut hund");
+                System.out.println("\n--- CHECKA UT HUND ---");
+
+                System.out.print("Ange hundens chipnummer: ");
+                String chipNumber = scanner.nextLine();
+
+                Dog dog = register.findDog(chipNumber);
+
+                if (dog == null) {
+                    System.out.println("Hunden hittades inte!");
+
+                } else if (!dog.isCheckedIn()) {
+                    System.out.println("Hunden är redan utcheckad!");
+
+                } else {
+                    dog.setCheckedIn(false);
+                    System.out.println("Hunden " + dog.getName()
+                            + " har checkats ut!");
+                }
+
+
+
 
                 // 0. Avsluta
             } else if (choice == 0) {
