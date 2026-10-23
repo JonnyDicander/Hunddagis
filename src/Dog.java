@@ -1,4 +1,5 @@
 
+
 public class Dog {
 
     // Hundens uppgifter
@@ -10,7 +11,6 @@ public class Dog {
     private boolean canSitWithOthers;
     private boolean neutered;
     private boolean needsGrooming;
-    private String coatType;
     private boolean visionImpaired;
     private boolean hearingImpaired;
     private boolean checkedIn;
@@ -19,8 +19,7 @@ public class Dog {
     public Dog(String name, String breed, String chipNumber,
                String gender, int age, boolean canSitWithOthers,
                boolean neutered, boolean needsGrooming,
-               String coatType, boolean visionImpaired,
-               boolean hearingImpaired) {
+               boolean visionImpaired, boolean hearingImpaired) {
 
         this.name = name;
         this.breed = breed;
@@ -30,7 +29,6 @@ public class Dog {
         this.canSitWithOthers = canSitWithOthers;
         this.neutered = neutered;
         this.needsGrooming = needsGrooming;
-        this.coatType = coatType;
         this.visionImpaired = visionImpaired;
         this.hearingImpaired = hearingImpaired;
 
@@ -63,7 +61,7 @@ public class Dog {
                            String gender, int age,
                            boolean canSitWithOthers,
                            boolean neutered, boolean needsGrooming,
-                           String coatType, boolean visionImpaired,
+                           boolean visionImpaired,
                            boolean hearingImpaired) {
 
         this.name = name;
@@ -73,7 +71,6 @@ public class Dog {
         this.canSitWithOthers = canSitWithOthers;
         this.neutered = neutered;
         this.needsGrooming = needsGrooming;
-        this.coatType = coatType;
         this.visionImpaired = visionImpaired;
         this.hearingImpaired = hearingImpaired;
     }
@@ -86,7 +83,8 @@ public class Dog {
         System.out.println("Namn: " + name);
         System.out.println("Ras: " + breed);
         System.out.println("Chipnummer: " + chipNumber);
-        System.out.println("Kön: " + gender);
+        System.out.println("Kön: " +
+                (gender.equalsIgnoreCase("H") ? "Hane" : "Tik"));
         System.out.println("Ålder: " + age + " år");
 
         System.out.println("Samsittning: " +
@@ -97,8 +95,6 @@ public class Dog {
 
         System.out.println("Pälsvård: " +
                 (needsGrooming ? "Ja" : "Nej"));
-
-        System.out.println("Pälstyp: " + coatType);
 
         System.out.println("Synnedsättning: " +
                 (visionImpaired ? "Ja" : "Nej"));

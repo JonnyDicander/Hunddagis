@@ -101,10 +101,42 @@ Förklaring:
 
 
 Förbättrad felhantering i Main.java:
+
 - Jag har förbättrat felhanteringen i Main.java för att göra programmet enklare och tydligare att använda.
 - Kontroll av menyval: Användaren kan välja mellan alternativ 1–8. Om användaren skriver ett ogiltigt val får hen ett vänligt felmeddelande och får försöka igen.
 - Kontroll av inmatning: Programmet kontrollerar att användaren anger giltiga heltal, inte lämnar textfält tomma och svarar med J eller N på ja- och nej-frågor.
 - Upprepade frågor: Med hjälp av while-loopar upprepas frågorna tills användaren anger ett giltigt svar.
 - Välkomst- och avslutningsmeddelanden: Programmet visar ett välkomstmeddelande när det startar och ett tackmeddelande med ”Välkommen åter!” när användaren väljer att avsluta med alternativ 8.
 - Syftet med ändringarna är att göra programmet mer användarvänligt och minska risken för att felaktig inmatning stör programmets körning.
+
+
+
+
+# Hunddagis – Mina ändringar
+
+## Förbättrad registrering och felhantering
+
+Jag har arbetat med att förbättra registreringen av hundar och gjort programmet mer användarvänligt.
+
+### Ändringar jag har gjort
+
+- **Namn och ras:** Kontrollerar att användaren skriver text och inte siffror.
+- **Chipnummer:** Accepterar endast siffror och kontrollerar att numret inte redan finns registrerat.
+- **Kön:** Användaren kan endast välja H (hane) eller T (tik), Har även lagt till direkt i frågan vad H/T står för.
+- **Ålder:** Måste vara ett heltal mellan 0 och 25.
+- **Ja/nej-frågor:** Accepterar endast J eller N.
+- **Pälslängd:** Tagit bort frågan eftersom vi redan frågar om hunden behöver pälsvård.
+- **Felhantering:** Vid felaktig inmatning visas ett felmeddelande och frågan upprepas utan att programmet kraschar.
+
+### Ändrade filer
+
+- `Main.java` – Förbättrad inmatningskontroll och felhantering.
+- `Dog.java` – Tagit bort onödig information om pälslängd.
+- `DogRegister.java` – Befintlig kontroll av dubbla chipnummer används.
+
+### Förslag på förbättring kan vara att när man vill ändra en uppgift på en registrerad hund så kan man välja
+i en lista vilken punkt man vill förändra, då slipper man gå igenom alla frågor igen när man kanske bara vill ändra kön
+eller en allergi.
+
+
 

@@ -5,22 +5,19 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Scanner används för att läsa det som användaren skriver in.
+        // Scanner används för att läsa användarens inmatning
         Scanner scanner = new Scanner(System.in);
 
-        // Skapar hundregistret som hanterar hundarna.
+        // Skapar hundregistret
         DogRegister register = new DogRegister();
 
-        // Ett vänligt välkomstmeddelande som visas ovanför menynvalen när programmet körs.
         System.out.println("\nVälkommen till hunddagiset!");
 
-        // Startvärdet är -1 eftersom användaren ännu inte valt något.
         int choice = -1;
 
-        // Huvudloopen fortsätter så länge användaren inte väljer 8.
+        // Huvudmenyn körs tills användaren väljer 8
         while (choice != 8) {
 
-            // Skriver ut huvudmenyn.
             System.out.println("\n===== HUNDDAGIS =====");
             System.out.println("1. Registrera hund");
             System.out.println("2. Visa alla hundar");
@@ -32,26 +29,42 @@ public class Main {
             System.out.println("8. Avsluta");
             System.out.println("=====================");
 
-            // Läser in ett giltigt menyval mellan 1 och 8.
-            // Om användaren skriver fel frågar metoden igen, tills påståendet blir sant.
             choice = readMenuChoice(scanner);
 
-            // 1. Registrera hund
+            // 1. REGISTRERA HUND
             if (choice == 1) {
 
                 System.out.println("\n--- REGISTRERA HUND ---");
 
-                // Läser in text och kontrollerar att den inte är tom.
-                String name = readNonEmpty(scanner, "Ange namn: ");
-                String breed = readNonEmpty(scanner, "Ange ras: ");
-                String chipNumber = readNonEmpty(
-                        scanner, "Ange chipnummer: ");
-                String gender = readNonEmpty(scanner, "Ange kön: ");
+                String name = readDogText(
+                        scanner, "Ange namn: ");
 
-                // Åldern måste vara ett heltal som är minst 0.
-                int age = readInt(scanner, "Ange ålder: ", 0);
+                String breed = readDogText(
+                        scanner, "Ange ras: ");
 
-                // Läs in svar på frågor som bara tillåter J eller N.
+                // Kontrollerar att chipnumret är unikt
+                String chipNumber;
+
+                while (true) {
+
+                    chipNumber = readChipNumber(
+                            scanner, "Ange chipnummer: ");
+
+                    // Finns chipnumret inte går vi vidare
+                    if (register.findDog(chipNumber) == null) {
+                        break;
+                    }
+
+                    System.out.println(
+                            "Detta chipnummer finns redan registrerat! Vänligen försök igen.");
+                }
+
+                String gender = readGender(
+                        scanner, "Ange kön (H = Hane / T = Tik): ");
+
+                int age = readAge(
+                        scanner, "Ange ålder (0-25): ");
+
                 boolean canSitWithOthers = readYesNo(
                         scanner, "Kan sitta med andra hundar? (J/N): ");
 
@@ -61,77 +74,73 @@ public class Main {
                 boolean needsGrooming = readYesNo(
                         scanner, "Behöver pälsvård? (J/N): ");
 
-                String coatType = readNonEmpty(
-                        scanner, "Långhårig eller korthårig?: ");
-
                 boolean visionImpaired = readYesNo(
                         scanner, "Synnedsättning? (J/N): ");
 
                 boolean hearingImpaired = readYesNo(
                         scanner, "Hörselnedsättning? (J/N): ");
 
-                // Skapar ett hundobjekt med de inmatade uppgifterna.
+                // Skapar hundobjektet
                 Dog dog = new Dog(
                         name, breed, chipNumber, gender, age,
                         canSitWithOthers, neutered, needsGrooming,
-                        coatType, visionImpaired, hearingImpaired );
+                        visionImpaired, hearingImpaired);
 
-                // Lägger till hunden i registret.
+                // Registrerar hunden
                 register.addDog(dog);
 
-                // 2. Visa alla hundar
+                // 2. VISA ALLA HUNDAR
             } else if (choice == 2) {
 
-                // Ber registret att visa alla registrerade hundar.
                 register.showAllDogs();
 
-                // 3. Sök efter hund
+                // 3. SÖK EFTER HUND
             } else if (choice == 3) {
 
                 System.out.println("\n--- SÖK EFTER HUND ---");
 
-                // Användaren måste skriva något att söka efter.
                 String search = readNonEmpty(
                         scanner, "Ange namn eller chipnummer: ");
 
-                // Söker efter hunden i registret.
                 Dog dog = register.searchDog(search);
 
-                // Om hunden hittas skrivs dess uppgifter ut.
                 if (dog != null) {
+
                     System.out.println("\nHunden hittades!");
                     dog.showInfo();
 
-                    // null betyder här att ingen hund hittades.
                 } else {
+
                     System.out.println("Ingen hund hittades!");
                 }
 
-                // 4. Ändra hunduppgifter
+                // 4. ÄNDRA HUNDUPPGIFTER
             } else if (choice == 4) {
 
                 System.out.println("\n--- ÄNDRA HUNDUPPGIFTER ---");
 
-                // Chipnumret används för att hitta rätt hund.
-                String chipNumber = readNonEmpty(
+                String chipNumber = readChipNumber(
                         scanner, "Ange hundens chipnummer: ");
 
                 Dog dog = register.findDog(chipNumber);
 
-                // Om hunden inte hittas kan uppgifterna inte ändras.
                 if (dog == null) {
 
                     System.out.println("Hunden hittades inte.");
 
                 } else {
 
-                    // Läser in hundens nya uppgifter.
-                    String name = readNonEmpty(scanner, "Nytt namn: ");
-                    String breed = readNonEmpty(scanner, "Ny ras: ");
-                    int age = readInt(scanner, "Ny ålder: ", 0);
-                    String gender = readNonEmpty(scanner, "Nytt kön: ");
-                    String coatType = readNonEmpty(
-                            scanner, "Ny pälstyp: ");
+                    String name = readDogText(
+                            scanner, "Nytt namn: ");
+
+                    String breed = readDogText(
+                            scanner, "Ny ras: ");
+
+                    int age = readAge(
+                            scanner, "Ny ålder (0-25): ");
+
+                    String gender = readGender(
+                            scanner, "Nytt kön (H = Hane / T = Tik): ");
 
                     boolean canSitWithOthers = readYesNo(
                             scanner, "Kan vara med andra hundar? (J/N): ");
@@ -148,21 +157,22 @@ public class Main {
                     boolean hearingImpaired = readYesNo(
                             scanner, "Nedsatt hörsel? (J/N): ");
 
-                    // Skickar de nya uppgifterna till hundobjektet.
+                    // Uppdaterar hundens uppgifter
                     dog.updateInfo(
                             name, breed, gender, age,
                             canSitWithOthers, neutered, needsGrooming,
-                            coatType, visionImpaired, hearingImpaired );
+                            visionImpaired, hearingImpaired);
 
                     System.out.println(
                             "Hundens uppgifter har uppdaterats!");
                 }
 
-                // 5. Ta bort hunden ur registret
+                // 5. TA BORT HUND
             } else if (choice == 5) {
 
-                // Frågar efter chipnumret för hunden som ska tas bort.
-                String chipNumber = readNonEmpty(
+                System.out.println("\n--- TA BORT HUND ---");
+
+                String chipNumber = readChipNumber(
                         scanner, "Ange hundens chipnummer: ");
 
                 Dog dog = register.findDog(chipNumber);
@@ -173,11 +183,9 @@ public class Main {
 
                 } else {
 
-                    // Visar hundens uppgifter innan borttagning.
                     System.out.println("Du har valt att ta bort:");
                     dog.showInfo();
 
-                    // Användaren måste bekräfta borttagningen.
                     boolean confirm = readYesNo(
                             scanner, "Är du säker? (J/N): ");
 
@@ -191,12 +199,12 @@ public class Main {
                     }
                 }
 
-                // 6. Checka in en hund
+                // 6. CHECKA IN HUND
             } else if (choice == 6) {
 
                 System.out.println("\n--- CHECKA IN HUND ---");
 
-                String chipNumber = readNonEmpty(
+                String chipNumber = readChipNumber(
                         scanner, "Ange hundens chipnummer: ");
 
                 Dog dog = register.findDog(chipNumber);
@@ -205,26 +213,24 @@ public class Main {
 
                     System.out.println("Hunden hittades inte!");
 
-                    // Kontrollerar att hunden inte redan är incheckad.
                 } else if (dog.isCheckedIn()) {
 
                     System.out.println("Hunden är redan incheckad!");
 
                 } else {
 
-                    // Ändrar hundens status till incheckad.
                     dog.setCheckedIn(true);
 
                     System.out.println("Hunden " + dog.getName()
                             + " har checkats in!");
                 }
 
-                // 7. Checka ut en hund
+                // 7. CHECKA UT HUND
             } else if (choice == 7) {
 
                 System.out.println("\n--- CHECKA UT HUND ---");
 
-                String chipNumber = readNonEmpty(
+                String chipNumber = readChipNumber(
                         scanner, "Ange hundens chipnummer: ");
 
                 Dog dog = register.findDog(chipNumber);
@@ -233,180 +239,204 @@ public class Main {
 
                     System.out.println("Hunden hittades inte!");
 
-                    // Kontrollerar att hunden faktiskt är incheckad.
                 } else if (!dog.isCheckedIn()) {
 
                     System.out.println("Hunden är redan utcheckad!");
 
                 } else {
 
-                    // Ändrar hundens status till utcheckad.
                     dog.setCheckedIn(false);
 
                     System.out.println("Hunden " + dog.getName()
                             + " har checkats ut!");
                 }
 
-                // 8. Avsluta programmet
+                // 8. AVSLUTA
             } else if (choice == 8) {
 
-                // Avslutar huvudloopen.
-                System.out.println("\nTack för att du besökte hunddagiset!");
+                System.out.println(
+                        "\nTack för att du besökte hunddagiset!");
                 System.out.println("Välkommen åter!");
             }
         }
 
-        // Stänger Scanner när programmet är färdigt.
         scanner.close();
     }
 
-    /*
-     * HJÄLPMETOD 1: Kontroll av menyval!
-     *
-     * Kontrollerar att användaren skriver ett heltal
-     * mellan 1 och 8.
-     *
-     * Vid fel visas ett meddelande och frågan upprepas igen.
-     */
+    // ==========================================
+    // HJÄLPMETOD 1 - KONTROLL AV MENYVAL
+    // ==========================================
 
     private static int readMenuChoice(Scanner scanner) {
 
-        // while (true) upprepar frågan tills metoden returnerar ett värde.
         while (true) {
 
             System.out.print("Ditt val: ");
-
-            // Läser hela raden som användaren skriver.
             String input = scanner.nextLine().trim();
 
             try {
-                // Försöker omvandla texten till ett heltal.
+
                 int choice = Integer.parseInt(input);
 
-                // Godkänner endast menyval från 1 till 8.
                 if (choice >= 1 && choice <= 8) {
-
-                    // Skickar tillbaka det giltiga menyvalet.
                     return choice;
                 }
 
-                // Körs om talet exempelvis är 0 eller 9.
                 System.out.println(
-                        "Det valet fungerar inte, Välj gärna ett tal mellan 1 och 8.");
+                        "Välj gärna ett tal mellan 1 och 8.");
 
             } catch (NumberFormatException e) {
 
-                // Körs om användaren exempelvis skulle råka skriva in hej eller 2.5 i menyvalet.
                 System.out.println(
                         "Hoppsan! Skriv gärna ett heltal mellan 1 och 8.");
             }
-
-            // Vid fel börjar loopen om och frågar efter ett nytt val.
         }
     }
 
-    /*
-     * HJÄLPMETOD 2: Kontroll av text!
-     *
-     * Kontrollerar att användaren inte lämnar ett textfält tomt.
-     */
+    // ==========================================
+    // HJÄLPMETOD 2 - KONTROLL AV TEXT
+    // ==========================================
 
     private static String readNonEmpty(
             Scanner scanner, String prompt) {
 
-        // Upprepar frågan tills användaren skriver text.
         while (true) {
 
             System.out.print(prompt);
-
-            // trim() tar bort mellanslag i början och slutet.
             String input = scanner.nextLine().trim();
 
-            // Om texten inte är tom skickas den tillbaka.
             if (!input.isEmpty()) {
-
                 return input;
             }
 
-            // Körs om användaren bara trycker på Enter
-            // eller skriver enbart mellanslag.
-            System.out.println("Du glömde att fylla i fältet. Försök gärna igen!");
+            System.out.println(
+                    "Du glömde att fylla i fältet. Försök gärna igen!");
         }
     }
 
-    /*
-     * HJÄLPMETOD 3: Kontroll av heltal!
-     * Kontrollerar att användaren skriver ett heltal
-     * som är minst lika stort som det angivna minimivärdet.
-     */
+    // ==========================================
+    // HJÄLPMETOD 3 - NAMN OCH RAS
+    // ==========================================
 
-    private static int readInt(
-            Scanner scanner, String prompt, int min) {
+    private static String readDogText(
+            Scanner scanner, String prompt) {
 
-        // Upprepar frågan tills ett giltigt heltal anges.
         while (true) {
 
             System.out.print(prompt);
-
             String input = scanner.nextLine().trim();
 
-            try {
-                // Försöker omvandla texten till ett heltal.
-                int number = Integer.parseInt(input);
-
-                // Kontrollerar att talet uppfyller minimikravet.
-                if (number >= min) {
-
-                    return number;
-                }
-
-                // Körs om talet är mindre än min.
-                System.out.println("Du behöver ange ett tal som är minst " + min + " Försök gärna igen!");
-
-            } catch (NumberFormatException e) {
-
-                // Körs om inmatningen inte är ett giltigt heltal.
-                System.out.println("Det verkar inte vara ett heltal. Försök gärna igen!");
+            // Tillåter bokstäver, mellanslag,
+            // bindestreck och apostrof
+            if (input.matches("[\\p{L}]+(?:[ '-][\\p{L}]+)*")) {
+                return input;
             }
 
-            // Vid fel börjar loopen om och frågar igen, tills påståendet blir sant.
+            System.out.println(
+                    "Ange endast bokstäver. Vänligen försök igen.");
         }
     }
 
-    /*
-     * HJÄLPMETOD 4: Kontroll av JA och NEJ påståenden!
-     * Godkänner endast J eller N.
-     * Tillåter att både Stora och små bokstäver fungerar.
-     */
+    // ==========================================
+    // HJÄLPMETOD 4 - CHIPNUMMER
+    // ==========================================
+
+    private static String readChipNumber(
+            Scanner scanner, String prompt) {
+
+        while (true) {
+
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+
+            // Godkänner endast siffror
+            if (input.matches("[0-9]+")) {
+                return input;
+            }
+
+            System.out.println(
+                    "Detta är inte ett giltigt chipnummer. Försök igen.");
+        }
+    }
+
+    // ==========================================
+    // HJÄLPMETOD 5 - KÖN
+    // ==========================================
+
+    private static String readGender(
+            Scanner scanner, String prompt) {
+
+        while (true) {
+
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+
+            if (input.equalsIgnoreCase("H")) {
+                return "H";
+            }
+
+            if (input.equalsIgnoreCase("T")) {
+                return "T";
+            }
+
+            System.out.println(
+                    "Ange H för hane eller T för tik. Vänligen försök igen.");
+        }
+    }
+
+    // ==========================================
+    // HJÄLPMETOD 6 - ÅLDER 0-25
+    // ==========================================
+
+    private static int readAge(
+            Scanner scanner, String prompt) {
+
+        while (true) {
+
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+
+            try {
+
+                int age = Integer.parseInt(input);
+
+                if (age >= 0 && age <= 25) {
+                    return age;
+                }
+
+                System.out.println(
+                        "Åldern måste vara mellan 0 och 25 år.");
+
+            } catch (NumberFormatException e) {
+
+                System.out.println(
+                        "Det verkar inte vara ett heltal. Försök gärna igen!");
+            }
+        }
+    }
+
+    // ==========================================
+    // HJÄLPMETOD 7 - JA ELLER NEJ
+    // ==========================================
 
     private static boolean readYesNo(
             Scanner scanner, String prompt) {
 
-        // Upprepar frågan tills användaren svarar J eller N.
         while (true) {
 
             System.out.print(prompt);
-
             String input = scanner.nextLine().trim();
 
-            // equalsIgnoreCase godkänner både J och j.
             if (input.equalsIgnoreCase("J")) {
-
-                // true betyder ja.
                 return true;
             }
 
-            // Godkänner både N och n.
             if (input.equalsIgnoreCase("N")) {
-
-                // false betyder nej.
                 return false;
             }
 
-            // Alla andra svar ger ett felmeddelande.
-            System.out.println("Skriv gärna J för ja eller N för nej.");
-
-            // Loopen börjar om och samma fråga ställs igen.
+            System.out.println(
+                    "Skriv gärna J för ja eller N för nej.");
         }
     }
 }
