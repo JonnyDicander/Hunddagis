@@ -1,11 +1,12 @@
 // 1. [] Skapa Namn?, Ange Ras?, Ange Chipnummer? Ange kön?, Ålder?, Möjlighet till samsittning med andra hundar?
-// Kastrerad? Pälsvård? Lång/Korthårig? Syn/hörsel-nedsättning J/N?
+// Kastrerad? Pälsvård? Syn/hörsel-nedsättning J/N? 
 
 
-// 2. [] Egenskaper? Blindhund? Narkotikasökande? Lik hund? Sprängämnen? Personsök? Jägarhund?
+// 2. [] Egenskaper: Blindhund(Ledarhund)? Narkotikasökande? Lik hund? Sprängämnen? Personsök? Jägarhund?
 // Tillgänglig för hjälp till polis eller missing people? Godkänner ägare utlåning? Tjänstehundar? 
 
-//3.  [] Sjukdom/Allergi? J/N? 
+
+// 3. [] Hundens hälsa och medicinska behov: Sjukdom J/N? Allergi? J/N? 
 
 
 1. Så fungerar programmet
@@ -110,8 +111,6 @@ Förbättrad felhantering i Main.java:
 - Syftet med ändringarna är att göra programmet mer användarvänligt och minska risken för att felaktig inmatning stör programmets körning.
 
 
-
-
 # Hunddagis – Mina ändringar
 
 ## Förbättrad registrering och felhantering
@@ -135,8 +134,64 @@ Jag har arbetat med att förbättra registreringen av hundar och gjort programme
 - `DogRegister.java` – Befintlig kontroll av dubbla chipnummer används.
 
 ### Förslag på förbättring kan vara att när man vill ändra en uppgift på en registrerad hund så kan man välja
-i en lista vilken punkt man vill förändra, då slipper man gå igenom alla frågor igen när man kanske bara vill ändra kön
+I en lista vilken punkt man vill förändra, då slipper man gå igenom alla frågor igen när man kanske bara vill ändra kön
 eller en allergi.
+
+## Nya funktioner i Hunddagis
+
+### 1. Visa incheckade hundar
+Uppdatering av menyval
+
+Jag ändrade tillbaka avslutningsalternativet från menyval 8 till 0, så att användaren avslutar programmet genom att välja 0.
+Jag har lagt till ett nytt menyval (8) som gör det möjligt att visa alla hundar som för tillfället är incheckade på hunddagiset.
+
+- I `DogRegister.java` har jag lagt till metoden `showCheckedInDogs()`.
+- Metoden går igenom hundarna i registret med hjälp av en `for`-loop.
+- `isCheckedIn()` kontrollerar om hunden är incheckad.
+- Endast de incheckade hundarna visas för användaren.
+
+Syftet är att enklare kunna få en överblick över vilka hundar som befinner sig på hunddagiset.
+
+### 2. Visa statistik
+
+Jag har lagt till menyval (9) för att visa statistik över hundarna i registret.
+
+I `DogRegister.java` har jag lagt till metoden `showStatistics()`.
+
+Statistiken visar:
+- Totalt antal registrerade hundar.
+- Antal incheckade hundar.
+- Antal utcheckade hundar.
+- Antal hundar som behöver pälsvård.
+- Antal hundar med synnedsättning.
+- Antal hundar med hörselnedsättning.
+
+Med hjälp av en `for`-loop och `if`-satser räknar programmet hur många hundar som tillhör de olika kategorierna.
+
+Syftet är att få en bättre överblick över hundarna och deras särskilda behov.
+
+### 3. Datum och tid vid in- och utcheckning
+
+Jag har lagt till en funktion som registrerar datum och klockslag när en hund checkas in eller ut.
+
+**Ändringar i `Dog.java`:**
+- Importerat `LocalDateTime` för att hantera datum och tid.
+- Lagt till variablerna `checkInTime` och `checkOutTime`.
+- Uppdaterat metoden `setCheckedIn()` så att aktuell tid sparas när hundens incheckningsstatus ändras.
+- Lagt till getters för att hämta hundens senaste in- och utcheckningstid.
+
+**Ändringar i `Main.java`:**
+- Importerat `DateTimeFormatter` för att formatera datum och tid.
+- Lagt till formatet `yyyy-MM-dd HH:mm`.
+- Uppdaterat menyval 6 och 7 så att datum och klockslag skrivs ut när hunden checkas in eller ut.
+
+**Förklaring:**
+- `LocalDateTime.now()` hämtar aktuellt datum och klockslag.
+- `DateTimeFormatter` bestämmer hur datum och tid ska visas.
+- `getCheckInTime()` hämtar hundens senaste incheckningstid.
+- `getCheckOutTime()` hämtar hundens senaste utcheckningstid.
+
+Syftet är att användare ska kunna se när en hund senast checkades in eller ut och göra det enklare att hålla reda på hundarnas vistelser.
 
 
 
