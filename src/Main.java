@@ -16,7 +16,7 @@ public class Main {
         int choice = -1;
 
         // Huvudmenyn körs tills användaren väljer 8
-        while (choice != 8) {
+        while (choice != 0) {
 
             System.out.println("\n===== HUNDDAGIS =====");
             System.out.println("1. Registrera hund");
@@ -26,7 +26,8 @@ public class Main {
             System.out.println("5. Ta bort hund");
             System.out.println("6. Checka in hund");
             System.out.println("7. Checka ut hund");
-            System.out.println("8. Avsluta");
+            System.out.println("8. Visa incheckade hundar");
+            System.out.println("0. Avsluta");
             System.out.println("=====================");
 
             choice = readMenuChoice(scanner);
@@ -251,8 +252,13 @@ public class Main {
                             + " har checkats ut!");
                 }
 
-                // 8. AVSLUTA
+                // 8. VISA INCHECKADE HUNDAR
             } else if (choice == 8) {
+
+                register.showCheckedInDogs();
+
+                // 0. AVSLUTA
+            } else if (choice == 0) {
 
                 System.out.println(
                         "\nTack för att du besökte hunddagiset!");
@@ -278,17 +284,17 @@ public class Main {
 
                 int choice = Integer.parseInt(input);
 
-                if (choice >= 1 && choice <= 8) {
+                if (choice == 0 || (choice >= 1 && choice <= 8)) {
                     return choice;
                 }
 
                 System.out.println(
-                        "Välj gärna ett tal mellan 1 och 8.");
+                        "Välj gärna ett tal mellan 1 och 0.");
 
             } catch (NumberFormatException e) {
 
                 System.out.println(
-                        "Hoppsan! Skriv gärna ett heltal mellan 1 och 8.");
+                        "Hoppsan! Skriv gärna ett heltal mellan 1 och 0.");
             }
         }
     }

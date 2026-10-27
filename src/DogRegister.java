@@ -82,4 +82,26 @@ public class DogRegister {
         System.out.println("Ingen hund med detta chipnummer hittades i hunddagisets register!");
         return false;
     }
+
+    // Visar alla hundar som är incheckade i hunddagiset
+    public void showCheckedInDogs() {
+
+        System.out.println("\n--- INCHECKADE HUNDAR ---");
+
+        int count = 0;
+
+        for (Dog dog : dogs) {
+
+            if (dog.isCheckedIn()) {
+
+                dog.showInfo();
+                count++;
+            }
+        }
+        if (count == 0) {
+            System.out.println("Inga hundar är incheckade just nu.");
+        } else {
+            System.out.println("Totalt incheckade hundar: " + count);
+        }
+    }
 }
