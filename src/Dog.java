@@ -51,6 +51,21 @@ public class Dog {
         return checkedIn;
     }
 
+    // Kontrollerar om hunden behöver pälsvård
+    public boolean isNeedsGrooming() {
+        return needsGrooming;
+    }
+
+    // Kontrollerar om hunden har synnedsättning
+    public boolean isVisionImpaired() {
+        return visionImpaired;
+    }
+
+    // Kontrollerar om hunden har hörselnedsättning
+    public boolean isHearingImpaired() {
+        return hearingImpaired;
+    }
+
     // Checkar in eller ut hunden
     public void setCheckedIn(boolean checkedIn) {
         this.checkedIn = checkedIn;

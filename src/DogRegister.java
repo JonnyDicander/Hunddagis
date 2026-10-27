@@ -104,4 +104,54 @@ public class DogRegister {
             System.out.println("Totalt incheckade hundar: " + count);
         }
     }
+
+    // Visar statistik över hunddagiset
+    public void showStatistics() {
+
+        int totalDogs = dogs.size();
+        int checkedInDogs = 0;
+
+        // Räknare för hundarnas särskilda behov
+        int groomingDogs = 0;
+        int visionImpairedDogs = 0;
+        int hearingImpairedDogs = 0;
+
+        // Går igenom alla registrerade hundar
+        for (Dog dog : dogs) {
+
+            if (dog.isCheckedIn()) {
+                checkedInDogs++;
+            }
+
+            if (dog.isNeedsGrooming()) {
+                groomingDogs++;
+            }
+
+            if (dog.isVisionImpaired()) {
+                visionImpairedDogs++;
+            }
+
+            if (dog.isHearingImpaired()) {
+                hearingImpairedDogs++;
+            }
+        }
+
+        int notCheckedInDogs = totalDogs - checkedInDogs;
+
+        // Skriver ut statistiken
+        System.out.println("\n===== HUNDDAGISETS STATISTIK =====");
+
+        System.out.println("\n--- REGISTRERADE HUNDAR ---");
+        System.out.println("Totalt registrerade hundar: " + totalDogs);
+        System.out.println("Incheckade hundar: " + checkedInDogs);
+        System.out.println("Ej incheckade hundar: " + notCheckedInDogs);
+
+        System.out.println("\n--- SÄRSKILDA BEHOV ---");
+        System.out.println("Behöver pälsvård: " + groomingDogs);
+        System.out.println("Har synnedsättning: " + visionImpairedDogs);
+        System.out.println("Har hörselnedsättning: " + hearingImpairedDogs);
+
+        System.out.println("=================================");
+    }
 }
+
