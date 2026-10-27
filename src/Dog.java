@@ -1,4 +1,5 @@
 
+import java.time.LocalDateTime;
 
 public class Dog {
 
@@ -14,6 +15,8 @@ public class Dog {
     private boolean visionImpaired;
     private boolean hearingImpaired;
     private boolean checkedIn;
+    private LocalDateTime checkInTime;
+    private LocalDateTime checkOutTime;
 
     // Konstruktor - skapar en ny hund
     public Dog(String name, String breed, String chipNumber,
@@ -66,10 +69,27 @@ public class Dog {
         return hearingImpaired;
     }
 
-    // Checkar in eller ut hunden
+    // Uppdaterar hundens incheckningsstatus och sparar datum och tid
     public void setCheckedIn(boolean checkedIn) {
+
         this.checkedIn = checkedIn;
+
+        if (checkedIn) {
+            checkInTime = LocalDateTime.now();
+        } else {
+            checkOutTime = LocalDateTime.now();
+        }
     }
+        // Hämtar hundens senaste incheckningstid
+        public LocalDateTime getCheckInTime() {
+            return checkInTime;
+        }
+
+        // Hämtar hundens senaste utcheckningstid
+        public LocalDateTime getCheckOutTime() {
+            return checkOutTime;
+        }
+
 
     // Ändrar hundens uppgifter
     public void updateInfo(String name, String breed,

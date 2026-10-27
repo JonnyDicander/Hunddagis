@@ -1,5 +1,8 @@
-
+// Används för att läsa inmatning från användaren
 import java.util.Scanner;
+// Används för att formatera datum och tid
+import java.time.format.DateTimeFormatter;
+
 
 public class Main {
 
@@ -7,6 +10,10 @@ public class Main {
 
         // Scanner används för att läsa användarens inmatning
         Scanner scanner = new Scanner(System.in);
+
+        // Bestämmer hur datum och tid ska visas
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
         // Skapar hundregistret
         DogRegister register = new DogRegister();
@@ -225,6 +232,9 @@ public class Main {
 
                     System.out.println("Hunden " + dog.getName()
                             + " har checkats in!");
+
+                    System.out.println("Datum och tid: "
+                            + dog.getCheckInTime().format(formatter));
                 }
 
                 // 7. CHECKA UT HUND
@@ -251,6 +261,9 @@ public class Main {
 
                     System.out.println("Hunden " + dog.getName()
                             + " har checkats ut!");
+
+                    System.out.println("Datum och tid: "
+                            + dog.getCheckOutTime().format(formatter));
                 }
 
                 // 8. VISA INCHECKADE HUNDAR
