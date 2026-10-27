@@ -193,5 +193,11 @@ Jag har lagt till en funktion som registrerar datum och klockslag när en hund c
 
 Syftet är att användare ska kunna se när en hund senast checkades in eller ut och göra det enklare att hålla reda på hundarnas vistelser.
 
-
+Jag har har uppdaterat Dog.java och Main.java för att förbättra menyval 4 – Ändra hunduppgifter.
+- Dog.java: Lagt till set-metoder så att varje uppgift kan ändras separat.
+- Main.java: Skapat en undermeny där användaren väljer vilken uppgift som ska ändras.
+- Enklare redigering: Man behöver inte längre fylla i alla hundens uppgifter på nytt.
+- Felhantering: Behållit kontroller för exempelvis namn, ålder och J/N.
+- Förbättrad användarvänlighet: Hundens uppgifter visas efter ändringen och man kan göra flera ändringar innan man går tillbaka.
+  DogRegister.java är oförändrad och alla tidigare funktioner finns kvar.
 

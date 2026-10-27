@@ -1,14 +1,12 @@
-// Används för att läsa inmatning från användaren
-import java.util.Scanner;
-// Används för att formatera datum och tid
-import java.time.format.DateTimeFormatter;
 
+import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        // Scanner används för att läsa användarens inmatning
+        // Scanner används för användarens inmatning
         Scanner scanner = new Scanner(System.in);
 
         // Bestämmer hur datum och tid ska visas
@@ -40,7 +38,10 @@ public class Main {
 
             choice = readMenuChoice(scanner);
 
+            // ==========================================
             // 1. REGISTRERA HUND
+            // ==========================================
+
             if (choice == 1) {
 
                 System.out.println("\n--- REGISTRERA HUND ---");
@@ -59,13 +60,12 @@ public class Main {
                     chipNumber = readChipNumber(
                             scanner, "Ange chipnummer: ");
 
-                    // Finns chipnumret inte går vi vidare
                     if (register.findDog(chipNumber) == null) {
                         break;
                     }
 
                     System.out.println(
-                            "Detta chipnummer finns redan registrerat! Vänligen försök igen.");
+                            "Detta chipnummer finns redan registrerat! Försök igen.");
                 }
 
                 String gender = readGender(
@@ -98,12 +98,18 @@ public class Main {
                 // Registrerar hunden
                 register.addDog(dog);
 
+                // ==========================================
                 // 2. VISA ALLA HUNDAR
+                // ==========================================
+
             } else if (choice == 2) {
 
                 register.showAllDogs();
 
+                // ==========================================
                 // 3. SÖK EFTER HUND
+                // ==========================================
+
             } else if (choice == 3) {
 
                 System.out.println("\n--- SÖK EFTER HUND ---");
@@ -123,7 +129,10 @@ public class Main {
                     System.out.println("Ingen hund hittades!");
                 }
 
+                // ==========================================
                 // 4. ÄNDRA HUNDUPPGIFTER
+                // ==========================================
+
             } else if (choice == 4) {
 
                 System.out.println("\n--- ÄNDRA HUNDUPPGIFTER ---");
@@ -135,48 +144,148 @@ public class Main {
 
                 if (dog == null) {
 
-                    System.out.println("Hunden hittades inte.");
+                    System.out.println("Hunden hittades inte!");
 
                 } else {
 
-                    String name = readDogText(
-                            scanner, "Nytt namn: ");
+                    System.out.println("\nHunden " + dog.getName() + " hittades!");
 
-                    String breed = readDogText(
-                            scanner, "Ny ras: ");
+                    // Visar hundens nuvarande uppgifter
+                    dog.showInfo();
 
-                    int age = readAge(
-                            scanner, "Ny ålder (0-25): ");
+                    int editChoice = -1;
 
-                    String gender = readGender(
-                            scanner, "Nytt kön (H = Hane / T = Tik): ");
+                    // Ändringsmenyn körs tills användaren väljer 0
+                    while (editChoice != 0) {
 
-                    boolean canSitWithOthers = readYesNo(
-                            scanner, "Kan vara med andra hundar? (J/N): ");
+                        System.out.println("\n--- ÄNDRA HUNDUPPGIFTER ---");
+                        System.out.println("1. Ändra namn");
+                        System.out.println("2. Ändra ras");
+                        System.out.println("3. Ändra ålder");
+                        System.out.println("4. Ändra kön");
+                        System.out.println("5. Ändra samsittning");
+                        System.out.println("6. Ändra kastrering");
+                        System.out.println("7. Ändra pälsvård");
+                        System.out.println("8. Ändra synnedsättning");
+                        System.out.println("9. Ändra hörselnedsättning");
+                        System.out.println("0. Tillbaka till huvudmenyn");
+                        System.out.println("==========================");
 
-                    boolean neutered = readYesNo(
-                            scanner, "Kastrerad? (J/N): ");
+                        editChoice = readMenuChoice(scanner);
 
-                    boolean needsGrooming = readYesNo(
-                            scanner, "Behöver pälsvård? (J/N): ");
+                        // Ändra namn
+                        if (editChoice == 1) {
 
-                    boolean visionImpaired = readYesNo(
-                            scanner, "Nedsatt syn? (J/N): ");
+                            String newName = readDogText(
+                                    scanner, "Ange nytt namn: ");
 
-                    boolean hearingImpaired = readYesNo(
-                            scanner, "Nedsatt hörsel? (J/N): ");
+                            dog.setName(newName);
 
-                    // Uppdaterar hundens uppgifter
-                    dog.updateInfo(
-                            name, breed, gender, age,
-                            canSitWithOthers, neutered, needsGrooming,
-                            visionImpaired, hearingImpaired);
+                            System.out.println(
+                                    "Hundens namn har ändrats till "
+                                            + dog.getName() + "!");
 
-                    System.out.println(
-                            "Hundens uppgifter har uppdaterats!");
+                            // Ändra ras
+                        } else if (editChoice == 2) {
+
+                            String newBreed = readDogText(
+                                    scanner, "Ange ny ras: ");
+
+                            dog.setBreed(newBreed);
+
+                            System.out.println(
+                                    "Hundens ras har uppdaterats!");
+
+                            // Ändra ålder
+                        } else if (editChoice == 3) {
+
+                            int newAge = readAge(
+                                    scanner, "Ange ny ålder (0-25): ");
+
+                            dog.setAge(newAge);
+
+                            System.out.println(
+                                    "Hundens ålder har uppdaterats!");
+
+                            // Ändra kön
+                        } else if (editChoice == 4) {
+
+                            String newGender = readGender(
+                                    scanner, "Ange nytt kön (H/T): ");
+
+                            dog.setGender(newGender);
+
+                            System.out.println(
+                                    "Hundens kön har uppdaterats!");
+
+                            // Ändra samsittning
+                        } else if (editChoice == 5) {
+
+                            boolean value = readYesNo(
+                                    scanner, "Kan sitta med andra hundar? (J/N): ");
+
+                            dog.setCanSitWithOthers(value);
+
+                            System.out.println(
+                                    "Hundens samsittning har uppdaterats!");
+
+                            // Ändra kastrering
+                        } else if (editChoice == 6) {
+
+                            boolean value = readYesNo(
+                                    scanner, "Kastrerad? (J/N): ");
+
+                            dog.setNeutered(value);
+
+                            System.out.println(
+                                    "Hundens kastreringsstatus har uppdaterats!");
+
+                            // Ändra pälsvård
+                        } else if (editChoice == 7) {
+
+                            boolean value = readYesNo(
+                                    scanner, "Behöver pälsvård? (J/N): ");
+
+                            dog.setNeedsGrooming(value);
+
+                            System.out.println(
+                                    "Hundens pälsvårdsbehov har uppdaterats!");
+
+                            // Ändra synnedsättning
+                        } else if (editChoice == 8) {
+
+                            boolean value = readYesNo(
+                                    scanner, "Synnedsättning? (J/N): ");
+
+                            dog.setVisionImpaired(value);
+
+                            System.out.println(
+                                    "Hundens synuppgifter har uppdaterats!");
+
+                            // Ändra hörselnedsättning
+                        } else if (editChoice == 9) {
+
+                            boolean value = readYesNo(
+                                    scanner, "Hörselnedsättning? (J/N): ");
+
+                            dog.setHearingImpaired(value);
+
+                            System.out.println(
+                                    "Hundens hörseluppgifter har uppdaterats!");
+                        }
+
+                        // Visar de uppdaterade uppgifterna
+                        if (editChoice >= 1 && editChoice <= 9) {
+
+                            dog.showInfo();
+                        }
+                    }
                 }
 
+                // ==========================================
                 // 5. TA BORT HUND
+                // ==========================================
+
             } else if (choice == 5) {
 
                 System.out.println("\n--- TA BORT HUND ---");
@@ -208,7 +317,10 @@ public class Main {
                     }
                 }
 
+                // ==========================================
                 // 6. CHECKA IN HUND
+                // ==========================================
+
             } else if (choice == 6) {
 
                 System.out.println("\n--- CHECKA IN HUND ---");
@@ -237,7 +349,10 @@ public class Main {
                             + dog.getCheckInTime().format(formatter));
                 }
 
+                // ==========================================
                 // 7. CHECKA UT HUND
+                // ==========================================
+
             } else if (choice == 7) {
 
                 System.out.println("\n--- CHECKA UT HUND ---");
@@ -266,18 +381,26 @@ public class Main {
                             + dog.getCheckOutTime().format(formatter));
                 }
 
+                // ==========================================
                 // 8. VISA INCHECKADE HUNDAR
+                // ==========================================
+
             } else if (choice == 8) {
 
                 register.showCheckedInDogs();
 
+                // ==========================================
                 // 9. VISA STATISTIK
+                // ==========================================
+
             } else if (choice == 9) {
 
                 register.showStatistics();
 
-
+                // ==========================================
                 // 0. AVSLUTA
+                // ==========================================
+
             } else if (choice == 0) {
 
                 System.out.println(
@@ -304,16 +427,17 @@ public class Main {
 
                 int choice = Integer.parseInt(input);
 
-                if (choice == 0 || (choice >= 1 && choice <= 9)) {
+                if (choice >= 0 && choice <= 9) {
                     return choice;
                 }
 
                 System.out.println(
-                        "Välj gärna ett tal mellan 1 och 9, eller 0 för att avsluta.");
+                        "Välj ett tal mellan 0 och 9.");
+
             } catch (NumberFormatException e) {
 
                 System.out.println(
-                        "Hoppsan! Skriv gärna ett heltal mellan 1 och 9, eller 0 för att avsluta.");
+                        "Hoppsan! Skriv ett heltal mellan 0 och 9.");
             }
         }
     }
@@ -335,7 +459,7 @@ public class Main {
             }
 
             System.out.println(
-                    "Du glömde att fylla i fältet. Försök gärna igen!");
+                    "Du glömde att fylla i fältet. Försök igen!");
         }
     }
 
@@ -358,7 +482,7 @@ public class Main {
             }
 
             System.out.println(
-                    "Ange endast bokstäver. Vänligen försök igen.");
+                    "Ange endast bokstäver. Försök igen.");
         }
     }
 
@@ -405,7 +529,7 @@ public class Main {
             }
 
             System.out.println(
-                    "Ange H för hane eller T för tik. Vänligen försök igen.");
+                    "Ange H för hane eller T för tik.");
         }
     }
 
@@ -435,7 +559,7 @@ public class Main {
             } catch (NumberFormatException e) {
 
                 System.out.println(
-                        "Det verkar inte vara ett heltal. Försök gärna igen!");
+                        "Det verkar inte vara ett heltal. Försök igen!");
             }
         }
     }
@@ -461,7 +585,7 @@ public class Main {
             }
 
             System.out.println(
-                    "Skriv gärna J för ja eller N för nej.");
+                    "Skriv J för ja eller N för nej.");
         }
     }
 }

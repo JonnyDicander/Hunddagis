@@ -39,38 +39,102 @@ public class Dog {
         this.checkedIn = false;
     }
 
-    // Hämtar hundens namn
+    // ==========================================
+    // GETTERS - HÄMTAR HUNDENS UPPGIFTER
+    // ==========================================
+
     public String getName() {
         return name;
     }
 
-    // Hämtar hundens chipnummer
     public String getChipNumber() {
         return chipNumber;
     }
 
-    // Kontrollerar om hunden är incheckad
     public boolean isCheckedIn() {
         return checkedIn;
     }
 
-    // Kontrollerar om hunden behöver pälsvård
     public boolean isNeedsGrooming() {
         return needsGrooming;
     }
 
-    // Kontrollerar om hunden har synnedsättning
     public boolean isVisionImpaired() {
         return visionImpaired;
     }
 
-    // Kontrollerar om hunden har hörselnedsättning
     public boolean isHearingImpaired() {
         return hearingImpaired;
     }
 
-    // Uppdaterar hundens incheckningsstatus och sparar datum och tid
+    public LocalDateTime getCheckInTime() {
+        return checkInTime;
+    }
+
+    public LocalDateTime getCheckOutTime() {
+        return checkOutTime;
+    }
+
+    // ==========================================
+    // SETTERS - ÄNDRAR ENSKILDA UPPGIFTER
+    // ==========================================
+
+    // Ändrar hundens namn
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Ändrar hundens ras
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    // Ändrar hundens ålder
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    // Ändrar hundens kön
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    // Ändrar om hunden kan sitta med andra hundar
+    public void setCanSitWithOthers(boolean value) {
+        this.canSitWithOthers = value;
+    }
+
+    // Ändrar om hunden är kastrerad
+    public void setNeutered(boolean value) {
+        this.neutered = value;
+    }
+
+    // Ändrar om hunden behöver pälsvård
+    public void setNeedsGrooming(boolean value) {
+        this.needsGrooming = value;
+    }
+
+    // Ändrar om hunden har synnedsättning
+    public void setVisionImpaired(boolean value) {
+        this.visionImpaired = value;
+    }
+
+    // Ändrar om hunden har hörselnedsättning
+    public void setHearingImpaired(boolean value) {
+        this.hearingImpaired = value;
+    }
+
+    // ==========================================
+    // INCHECKNING OCH UTCHECKNING
+    // ==========================================
+
+    // Uppdaterar status och sparar datum och tid
     public void setCheckedIn(boolean checkedIn) {
+
+        // Gör inget om statusen redan är densamma
+        if (this.checkedIn == checkedIn) {
+            return;
+        }
 
         this.checkedIn = checkedIn;
 
@@ -80,18 +144,12 @@ public class Dog {
             checkOutTime = LocalDateTime.now();
         }
     }
-        // Hämtar hundens senaste incheckningstid
-        public LocalDateTime getCheckInTime() {
-            return checkInTime;
-        }
 
-        // Hämtar hundens senaste utcheckningstid
-        public LocalDateTime getCheckOutTime() {
-            return checkOutTime;
-        }
+    // ==========================================
+    // UPPDATERA ALLA UPPGIFTER
+    // ==========================================
 
-
-    // Ändrar hundens uppgifter
+    // Behålls för kompatibilitet med gamla Main.java
     public void updateInfo(String name, String breed,
                            String gender, int age,
                            boolean canSitWithOthers,
@@ -110,7 +168,10 @@ public class Dog {
         this.hearingImpaired = hearingImpaired;
     }
 
-    // Visar hundens alla uppgifter
+    // ==========================================
+    // VISA HUNDENS UPPGIFTER
+    // ==========================================
+
     public void showInfo() {
 
         System.out.println("\n--- HUNDENS UPPGIFTER ---");
