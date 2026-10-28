@@ -1,4 +1,5 @@
 
+
 import java.util.ArrayList;
 
 public class DogRegister {
@@ -6,7 +7,10 @@ public class DogRegister {
     // Lista som lagrar alla registrerade hundar
     private ArrayList<Dog> dogs = new ArrayList<>();
 
-    // Registrera en ny hund
+    // ==========================================
+    // REGISTRERA EN NY HUND
+    // ==========================================
+
     public boolean addDog(Dog dog) {
 
         // Kontrollera om chipnumret redan finns
@@ -16,13 +20,17 @@ public class DogRegister {
         }
 
         dogs.add(dog);
+
         System.out.println("Hunden " + dog.getName() +
                 " har registrerats!");
 
         return true;
     }
 
-    // Visa alla registrerade hundar
+    // ==========================================
+    // VISA ALLA REGISTRERADE HUNDAR
+    // ==========================================
+
     public void showAllDogs() {
 
         if (dogs.isEmpty()) {
@@ -37,7 +45,10 @@ public class DogRegister {
         }
     }
 
-    // Sök efter hund med chipnummer
+    // ==========================================
+    // SÖK EFTER HUND MED CHIPNUMMER
+    // ==========================================
+
     public Dog findDog(String chipNumber) {
 
         for (Dog dog : dogs) {
@@ -50,7 +61,10 @@ public class DogRegister {
         return null;
     }
 
-    // Sök efter hund med namn eller angivet chipnummer
+    // ==========================================
+    // SÖK EFTER HUND MED NAMN ELLER CHIPNUMMER
+    // ==========================================
+
     public Dog searchDog(String search) {
 
         for (Dog dog : dogs) {
@@ -65,12 +79,16 @@ public class DogRegister {
         return null;
     }
 
-    // Ta bort en registrerad hund
+    // ==========================================
+    // TA BORT EN REGISTRERAD HUND
+    // ==========================================
+
     public boolean removeDog(String chipNumber) {
 
         Dog dog = findDog(chipNumber);
 
         if (dog != null) {
+
             dogs.remove(dog);
 
             System.out.println("Hunden " + dog.getName() +
@@ -79,11 +97,16 @@ public class DogRegister {
             return true;
         }
 
-        System.out.println("Ingen hund med detta chipnummer hittades i hunddagisets register!");
+        System.out.println(
+                "Ingen hund med detta chipnummer hittades i hunddagisets register!");
+
         return false;
     }
 
-    // Visar alla hundar som är incheckade i hunddagiset
+    // ==========================================
+    // VISA ALLA INCHECKADE HUNDAR
+    // ==========================================
+
     public void showCheckedInDogs() {
 
         System.out.println("\n--- INCHECKADE HUNDAR ---");
@@ -98,6 +121,7 @@ public class DogRegister {
                 count++;
             }
         }
+
         if (count == 0) {
             System.out.println("Inga hundar är incheckade just nu.");
         } else {
@@ -105,7 +129,10 @@ public class DogRegister {
         }
     }
 
-    // Visar statistik över hunddagiset
+    // ==========================================
+    // VISA STATISTIK ÖVER HUNDDAGISET
+    // ==========================================
+
     public void showStatistics() {
 
         int totalDogs = dogs.size();
@@ -153,5 +180,61 @@ public class DogRegister {
 
         System.out.println("=================================");
     }
-}
 
+    // ==========================================
+    // VISA KOSTNADER FÖR INCHECKADE HUNDAR
+    // ==========================================
+
+    public void showCosts() {
+
+        System.out.println("\n===== HUNDDAGISETS KOSTNADER =====");
+
+        double totalCost = 0;
+        int count = 0;
+
+        // Går igenom alla registrerade hundar
+        for (Dog dog : dogs) {
+
+            // Räknar bara hundar som är incheckade
+            if (dog.isCheckedIn()) {
+
+                // Hämtar antal minuter från Dog.java
+                long minutes = dog.getStayMinutes();
+
+                // Omvandlar minuter till timmar och minuter
+                long hours = minutes / 60;
+                long remainingMinutes = minutes % 60;
+
+                // Hämtar kostnaden från Dog.java
+                double cost = dog.getCost();
+
+                System.out.println("\nHund: " + dog.getName());
+                System.out.println("Chipnummer: " + dog.getChipNumber());
+
+                System.out.println("Vistelsetid: " + hours +
+                        " timmar och " + remainingMinutes + " minuter");
+
+                System.out.printf("Kostnad: %.2f kr%n", cost);
+
+                // Lägger till kostnaden i totalsumman
+                totalCost += cost;
+                count++;
+            }
+        }
+
+        if (count == 0) {
+
+            System.out.println("Inga hundar är incheckade just nu.");
+
+        } else {
+
+            System.out.println("\n--- SAMMANSTÄLLNING ---");
+
+            System.out.println("Antal incheckade hundar: " + count);
+
+            System.out.printf("Total kostnad: %.2f kr%n", totalCost);
+        }
+
+        System.out.println("=================================");
+    }
+}

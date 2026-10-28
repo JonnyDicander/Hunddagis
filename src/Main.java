@@ -33,6 +33,7 @@ public class Main {
             System.out.println("7. Checka ut hund");
             System.out.println("8. Visa incheckade hundar");
             System.out.println("9. Visa statistik");
+            System.out.println("10. Visa kostnader");
             System.out.println("0. Avsluta");
             System.out.println("=====================");
 
@@ -171,7 +172,7 @@ public class Main {
                         System.out.println("0. Tillbaka till huvudmenyn");
                         System.out.println("==========================");
 
-                        editChoice = readMenuChoice(scanner);
+                        editChoice = readMenuChoice(scanner, 9);
 
                         // Ändra namn
                         if (editChoice == 1) {
@@ -274,9 +275,8 @@ public class Main {
                                     "Hundens hörseluppgifter har uppdaterats!");
                         }
 
-                        // Visar de uppdaterade uppgifterna
+                        // Visar uppdaterade uppgifter
                         if (editChoice >= 1 && editChoice <= 9) {
-
                             dog.showInfo();
                         }
                     }
@@ -347,6 +347,8 @@ public class Main {
 
                     System.out.println("Datum och tid: "
                             + dog.getCheckInTime().format(formatter));
+
+                    System.out.println("Timpris: 50 kr");
                 }
 
                 // ==========================================
@@ -372,13 +374,31 @@ public class Main {
 
                 } else {
 
+                    // Checkar ut hunden och sparar tiden
                     dog.setCheckedIn(false);
 
-                    System.out.println("Hunden " + dog.getName()
+                    // Hämtar vistelsetiden
+                    long minutes = dog.getStayMinutes();
+
+                    long hours = minutes / 60;
+                    long remainingMinutes = minutes % 60;
+
+                    System.out.println("\nHunden " + dog.getName()
                             + " har checkats ut!");
 
-                    System.out.println("Datum och tid: "
+                    System.out.println("Incheckning: "
+                            + dog.getCheckInTime().format(formatter));
+
+                    System.out.println("Utcheckning: "
                             + dog.getCheckOutTime().format(formatter));
+
+                    System.out.println("Vistelsetid: " + hours
+                            + " timmar och " + remainingMinutes
+                            + " minuter");
+
+                    // Visar slutkostnaden
+                    System.out.printf("Slutkostnad: %.2f kr%n",
+                            dog.getCost());
                 }
 
                 // ==========================================
@@ -396,6 +416,14 @@ public class Main {
             } else if (choice == 9) {
 
                 register.showStatistics();
+
+                // ==========================================
+                // 10. VISA KOSTNADER
+                // ==========================================
+
+            } else if (choice == 10) {
+
+                register.showCosts();
 
                 // ==========================================
                 // 0. AVSLUTA
@@ -416,7 +444,14 @@ public class Main {
     // HJÄLPMETOD 1 - KONTROLL AV MENYVAL
     // ==========================================
 
+    // Huvudmenyn accepterar 0-10
     private static int readMenuChoice(Scanner scanner) {
+        return readMenuChoice(scanner, 10);
+    }
+
+    // Kan användas för menyer med olika maxvärden
+    private static int readMenuChoice(
+            Scanner scanner, int maxChoice) {
 
         while (true) {
 
@@ -427,17 +462,18 @@ public class Main {
 
                 int choice = Integer.parseInt(input);
 
-                if (choice >= 0 && choice <= 9) {
+                if (choice >= 0 && choice <= maxChoice) {
                     return choice;
                 }
 
                 System.out.println(
-                        "Välj ett tal mellan 0 och 9.");
+                        "Välj ett tal mellan 0 och " + maxChoice + ".");
 
             } catch (NumberFormatException e) {
 
                 System.out.println(
-                        "Hoppsan! Skriv ett heltal mellan 0 och 9.");
+                        "Hoppsan! Skriv ett heltal mellan 0 och "
+                                + maxChoice + ".");
             }
         }
     }
