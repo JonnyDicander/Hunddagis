@@ -1,5 +1,7 @@
 
+
 import java.time.LocalDateTime;
+import java.time.Duration;
 
 public class Dog {
 
@@ -15,10 +17,17 @@ public class Dog {
     private boolean visionImpaired;
     private boolean hearingImpaired;
     private boolean checkedIn;
+
     private LocalDateTime checkInTime;
     private LocalDateTime checkOutTime;
 
-    // Konstruktor - skapar en ny hund
+    // Timpris för hunddagiset
+    private static final double HOURLY_RATE = 50.0;
+
+    // ==========================================
+    // KONSTRUKTOR
+    // ==========================================
+
     public Dog(String name, String breed, String chipNumber,
                String gender, int age, boolean canSitWithOthers,
                boolean neutered, boolean needsGrooming,
@@ -139,10 +148,63 @@ public class Dog {
         this.checkedIn = checkedIn;
 
         if (checkedIn) {
+
+            // Sparar tiden när hunden checkas in
             checkInTime = LocalDateTime.now();
+
+            // Nollställer tidigare utcheckningstid
+            checkOutTime = null;
+
         } else {
+
+            // Sparar tiden när hunden checkas ut
             checkOutTime = LocalDateTime.now();
         }
+    }
+
+    // ==========================================
+    // BERÄKNA VISTELSETID
+    // ==========================================
+
+    public long getStayMinutes() {
+
+        // Om hunden aldrig varit incheckad
+        if (checkInTime == null) {
+            return 0;
+        }
+
+        LocalDateTime endTime;
+
+        if (checkedIn) {
+
+            // Använder nuvarande tid om hunden är incheckad
+            endTime = LocalDateTime.now();
+
+        } else {
+
+            // Använder utcheckningstiden
+            endTime = checkOutTime;
+        }
+
+        if (endTime == null) {
+            return 0;
+        }
+
+        // Beräknar antal hela minuter
+        long minutes = Duration.between(
+                checkInTime, endTime).toMinutes();
+
+        return Math.max(0, minutes);
+    }
+
+    // ==========================================
+    // BERÄKNA KOSTNAD
+    // ==========================================
+
+    public double getCost() {
+
+        // Kostnad = minuter * timpris / 60
+        return getStayMinutes() * HOURLY_RATE / 60.0;
     }
 
     // ==========================================
@@ -179,8 +241,10 @@ public class Dog {
         System.out.println("Namn: " + name);
         System.out.println("Ras: " + breed);
         System.out.println("Chipnummer: " + chipNumber);
+
         System.out.println("Kön: " +
                 (gender.equalsIgnoreCase("H") ? "Hane" : "Tik"));
+
         System.out.println("Ålder: " + age + " år");
 
         System.out.println("Samsittning: " +

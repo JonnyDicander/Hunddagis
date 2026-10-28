@@ -201,3 +201,16 @@ Jag har har uppdaterat Dog.java och Main.java för att förbättra menyval 4 –
 - Förbättrad användarvänlighet: Hundens uppgifter visas efter ändringen och man kan göra flera ändringar innan man går tillbaka.
   DogRegister.java är oförändrad och alla tidigare funktioner finns kvar.
 
+ Kostnadsberäkning för hunddagis
+
+ Jag har lagt till en funktion som automatiskt beräknar kostnaden för varje incheckad hund.
+
+- Timpriset är 50 kr och beräknas per minut.
+
+- Programmet sparar tid för incheckning och utcheckning.
+
+- Menyval 10 visar kostnaden för alla incheckade hundar och den totala summan.
+
+- Vid utcheckning visas hundens vistelsetid och slutkostnad.
+
+ Jag har uppdaterat Dog.java, DogRegister.java och Main.java utan att ta bort tidigare funktioner.
